@@ -8,6 +8,7 @@ import (
 )
 
 
+// ActionsetRow struct represents rows of the ACTIONSET table.
 type ActionsetRow struct {
     ID	string
     Name	sql.NullString
@@ -15,6 +16,7 @@ type ActionsetRow struct {
     Rate	sql.NullInt32
 }
 
+// IterateActionset provide access to all rows of the ACTIONSET matching given criteria.
 func IterateActionset(db *sql.DB, where string, callback func(v *ActionsetRow) error) error {
     query := "SELECT ID,NAME,FLOW_CONTROL,RATE FROM ACTIONSET"
     rows, err := db.Query(query)
@@ -38,6 +40,7 @@ func IterateActionset(db *sql.DB, where string, callback func(v *ActionsetRow) e
     return nil
 }
 
+// AlertsRow struct represents rows of the ALERTS table.
 type AlertsRow struct {
     SequenceNum	uint64
     DeviceShortID	uint
@@ -82,6 +85,7 @@ type AlertsRow struct {
     DstMachine	sql.NullString
 }
 
+// IterateAlerts provide access to all rows of the ALERTS matching given criteria.
 func IterateAlerts(db *sql.DB, where string, callback func(v *AlertsRow) error) error {
     query := "SELECT SEQUENCE_NUM,DEVICE_SHORT_ID,ALERT_TYPE_ID,POLICY_ID,SIGNATURE_ID,BEGIN_TIME,END_TIME,HIT_COUNT,SRC_IP_ADDR,SRC_IP_ADDR_HIGH,SRC_PORT,DST_IP_ADDR,DST_IP_ADDR_HIGH,DST_PORT,VIRTUAL_SEGMENT_INDEX,PHYSICAL_PORT_IN,VLAN_TAG,SEVERITY,PACKET_TRACE,DEVICE_TRACE_BUCKET,DEVICE_TRACE_BEGIN_SEQ,DEVICE_TRACE_END_SEQ,MESSAGE_PARMS,IDX,QUARANTINE_ACTION,FLOW_CONTROL,ACTION_SET_UUID,ACTION_SET_NAME,RATE_LIMIT_RATE,CLIENT_IP_ADDR,XFF_IP_ADDR,TCIP_IP_ADDR,URI_METHOD,URI_HOST,URI_STRING,SRC_USER_NAME,SRC_DOMAIN,SRC_MACHINE,DST_USER_NAME,DST_DOMAIN,DST_MACHINE FROM ALERTS"
     rows, err := db.Query(query)
@@ -105,11 +109,13 @@ func IterateAlerts(db *sql.DB, where string, callback func(v *AlertsRow) error) 
     return nil
 }
 
+// AlertTypeRow struct represents rows of the ALERT_TYPE table.
 type AlertTypeRow struct {
     ID	uint64
     Name	sql.NullString
 }
 
+// IterateAlertType provide access to all rows of the ALERT_TYPE matching given criteria.
 func IterateAlertType(db *sql.DB, where string, callback func(v *AlertTypeRow) error) error {
     query := "SELECT ID,NAME FROM ALERT_TYPE"
     rows, err := db.Query(query)
@@ -133,6 +139,7 @@ func IterateAlertType(db *sql.DB, where string, callback func(v *AlertTypeRow) e
     return nil
 }
 
+// DeviceRow struct represents rows of the DEVICE table.
 type DeviceRow struct {
     ID	string
     ShortID	uint
@@ -146,6 +153,7 @@ type DeviceRow struct {
     Managed	sql.NullInt64
 }
 
+// IterateDevice provide access to all rows of the DEVICE matching given criteria.
 func IterateDevice(db *sql.DB, where string, callback func(v *DeviceRow) error) error {
     query := "SELECT ID,SHORT_ID,NAME,MODEL,SERIAL_NUMBER,IP_ADDRESS,LOCATION,DV_VERSION,OS_VERSION,MANAGED FROM DEVICE"
     rows, err := db.Query(query)
@@ -169,11 +177,13 @@ func IterateDevice(db *sql.DB, where string, callback func(v *DeviceRow) error) 
     return nil
 }
 
+// EventCommentRow struct represents rows of the EVENT_COMMENT table.
 type EventCommentRow struct {
     Idx	uint64
     Comment	sql.NullString
 }
 
+// IterateEventComment provide access to all rows of the EVENT_COMMENT matching given criteria.
 func IterateEventComment(db *sql.DB, where string, callback func(v *EventCommentRow) error) error {
     query := "SELECT IDX,COMMENT FROM EVENT_COMMENT"
     rows, err := db.Query(query)
@@ -197,6 +207,7 @@ func IterateEventComment(db *sql.DB, where string, callback func(v *EventComment
     return nil
 }
 
+// FirewallBlockAlertsRow struct represents rows of the FIREWALL_BLOCK_ALERTS table.
 type FirewallBlockAlertsRow struct {
     SequenceNum	uint64
     DeviceID	uint
@@ -221,6 +232,7 @@ type FirewallBlockAlertsRow struct {
     SeverityID	uint8
 }
 
+// IterateFirewallBlockAlerts provide access to all rows of the FIREWALL_BLOCK_ALERTS matching given criteria.
 func IterateFirewallBlockAlerts(db *sql.DB, where string, callback func(v *FirewallBlockAlertsRow) error) error {
     query := "SELECT SEQUENCE_NUM,DEVICE_ID,BEGIN_TIME,END_TIME,HIT_COUNT,SRC_IP_ADDR,SRC_PORT,DST_IP_ADDR,DST_PORT,RULE_ID,PROTOCOL_NAME,PROTOCOL_NUMBER,PROTOCOL_TYPE,IN_ZONE_ID,OUT_ZONE_ID,PHYSICAL_PORT_IN,VLAN,CATEGORY,URL,URL_INFO,SEVERITY_ID FROM FIREWALL_BLOCK_ALERTS"
     rows, err := db.Query(query)
@@ -244,6 +256,7 @@ func IterateFirewallBlockAlerts(db *sql.DB, where string, callback func(v *Firew
     return nil
 }
 
+// FirewallTrafficAlertsRow struct represents rows of the FIREWALL_TRAFFIC_ALERTS table.
 type FirewallTrafficAlertsRow struct {
     SequenceNum	uint64
     DeviceID	uint
@@ -264,6 +277,7 @@ type FirewallTrafficAlertsRow struct {
     Message	sql.NullString
 }
 
+// IterateFirewallTrafficAlerts provide access to all rows of the FIREWALL_TRAFFIC_ALERTS matching given criteria.
 func IterateFirewallTrafficAlerts(db *sql.DB, where string, callback func(v *FirewallTrafficAlertsRow) error) error {
     query := "SELECT SEQUENCE_NUM,DEVICE_ID,END_TIME,SRC_IP_ADDR,SRC_PORT,DST_IP_ADDR,DST_PORT,RULE_ID,PROTOCOL_NAME,PROTOCOL_NUMBER,IN_ZONE_ID,OUT_ZONE_ID,CATEGORY,DURATION,URL,TRANFER_BYTES,MESSAGE FROM FIREWALL_TRAFFIC_ALERTS"
     rows, err := db.Query(query)
@@ -287,6 +301,7 @@ func IterateFirewallTrafficAlerts(db *sql.DB, where string, callback func(v *Fir
     return nil
 }
 
+// PolicyRow struct represents rows of the POLICY table.
 type PolicyRow struct {
     ID	string
     ProfileID	string
@@ -295,6 +310,7 @@ type PolicyRow struct {
     Name	sql.NullString
 }
 
+// IteratePolicy provide access to all rows of the POLICY matching given criteria.
 func IteratePolicy(db *sql.DB, where string, callback func(v *PolicyRow) error) error {
     query := "SELECT ID,PROFILE_ID,SIGNATURE_ID,ACTIONSET_ID,NAME FROM POLICY"
     rows, err := db.Query(query)
@@ -318,12 +334,14 @@ func IteratePolicy(db *sql.DB, where string, callback func(v *PolicyRow) error) 
     return nil
 }
 
+// ProductCategoryRow struct represents rows of the PRODUCT_CATEGORY table.
 type ProductCategoryRow struct {
     ID	sql.NullInt32
     Name	sql.NullString
     CategoryType	sql.NullString
 }
 
+// IterateProductCategory provide access to all rows of the PRODUCT_CATEGORY matching given criteria.
 func IterateProductCategory(db *sql.DB, where string, callback func(v *ProductCategoryRow) error) error {
     query := "SELECT ID,NAME,CATEGORY_TYPE FROM PRODUCT_CATEGORY"
     rows, err := db.Query(query)
@@ -347,6 +365,7 @@ func IterateProductCategory(db *sql.DB, where string, callback func(v *ProductCa
     return nil
 }
 
+// ProfileRow struct represents rows of the PROFILE table.
 type ProfileRow struct {
     ID	string
     Version	string
@@ -354,6 +373,7 @@ type ProfileRow struct {
     Description	sql.NullString
 }
 
+// IterateProfile provide access to all rows of the PROFILE matching given criteria.
 func IterateProfile(db *sql.DB, where string, callback func(v *ProfileRow) error) error {
     query := "SELECT ID,VERSION,NAME,DESCRIPTION FROM PROFILE"
     rows, err := db.Query(query)
@@ -377,6 +397,7 @@ func IterateProfile(db *sql.DB, where string, callback func(v *ProfileRow) error
     return nil
 }
 
+// ProfileInstallInventoryRow struct represents rows of the PROFILE_INSTALL_INVENTORY table.
 type ProfileInstallInventoryRow struct {
     ProfileID	string
     ProfileVersion	string
@@ -385,6 +406,7 @@ type ProfileInstallInventoryRow struct {
     CompleteTime	int64
 }
 
+// IterateProfileInstallInventory provide access to all rows of the PROFILE_INSTALL_INVENTORY matching given criteria.
 func IterateProfileInstallInventory(db *sql.DB, where string, callback func(v *ProfileInstallInventoryRow) error) error {
     query := "SELECT PROFILE_ID,PROFILE_VERSION,VIRTUAL_SEGMENT_ID,DISTRIBUTE_ID,COMPLETE_TIME FROM PROFILE_INSTALL_INVENTORY"
     rows, err := db.Query(query)
@@ -408,6 +430,7 @@ func IterateProfileInstallInventory(db *sql.DB, where string, callback func(v *P
     return nil
 }
 
+// QuarantineHostsRow struct represents rows of the QUARANTINE_HOSTS table.
 type QuarantineHostsRow struct {
     ID	uint
     QuarantinedIP	int64
@@ -420,6 +443,7 @@ type QuarantineHostsRow struct {
     LastUpdate	time.Time
 }
 
+// IterateQuarantineHosts provide access to all rows of the QUARANTINE_HOSTS matching given criteria.
 func IterateQuarantineHosts(db *sql.DB, where string, callback func(v *QuarantineHostsRow) error) error {
     query := "SELECT ID,QUARANTINED_IP,QUARANTINED_IP_2,QUARANTINED_MAC,POLICY_NAME,STATE,AUTHORITY,CREATE_TIME,LAST_UPDATE FROM QUARANTINE_HOSTS"
     rows, err := db.Query(query)
@@ -443,12 +467,14 @@ func IterateQuarantineHosts(db *sql.DB, where string, callback func(v *Quarantin
     return nil
 }
 
+// QuarantineNetworkDevicesRow struct represents rows of the QUARANTINE_NETWORK_DEVICES table.
 type QuarantineNetworkDevicesRow struct {
     Name	sql.NullString
     IPAddress	int64
     IPAddress2	int64
 }
 
+// IterateQuarantineNetworkDevices provide access to all rows of the QUARANTINE_NETWORK_DEVICES matching given criteria.
 func IterateQuarantineNetworkDevices(db *sql.DB, where string, callback func(v *QuarantineNetworkDevicesRow) error) error {
     query := "SELECT NAME,IP_ADDRESS,IP_ADDRESS_2 FROM QUARANTINE_NETWORK_DEVICES"
     rows, err := db.Query(query)
@@ -472,6 +498,7 @@ func IterateQuarantineNetworkDevices(db *sql.DB, where string, callback func(v *
     return nil
 }
 
+// SegmentRow struct represents rows of the SEGMENT table.
 type SegmentRow struct {
     ID	string
     DeviceID	string
@@ -481,6 +508,7 @@ type SegmentRow struct {
     SegmentIndex	sql.NullInt32
 }
 
+// IterateSegment provide access to all rows of the SEGMENT matching given criteria.
 func IterateSegment(db *sql.DB, where string, callback func(v *SegmentRow) error) error {
     query := "SELECT ID,DEVICE_ID,NAME,IP_ADDRESS,SLOT_INDEX,SEGMENT_INDEX FROM SEGMENT"
     rows, err := db.Query(query)
@@ -504,11 +532,13 @@ func IterateSegment(db *sql.DB, where string, callback func(v *SegmentRow) error
     return nil
 }
 
+// SeverityRow struct represents rows of the SEVERITY table.
 type SeverityRow struct {
     ID	uint
     Name	sql.NullString
 }
 
+// IterateSeverity provide access to all rows of the SEVERITY matching given criteria.
 func IterateSeverity(db *sql.DB, where string, callback func(v *SeverityRow) error) error {
     query := "SELECT ID,NAME FROM SEVERITY"
     rows, err := db.Query(query)
@@ -532,6 +562,7 @@ func IterateSeverity(db *sql.DB, where string, callback func(v *SeverityRow) err
     return nil
 }
 
+// SignatureRow struct represents rows of the SIGNATURE table.
 type SignatureRow struct {
     ID	string
     Num	int
@@ -547,6 +578,7 @@ type SignatureRow struct {
     Message	sql.NullString
 }
 
+// IterateSignature provide access to all rows of the SIGNATURE matching given criteria.
 func IterateSignature(db *sql.DB, where string, callback func(v *SignatureRow) error) error {
     query := "SELECT ID,NUM,SEVERITY,NAME,CLASS,PRODUCT_CATEGORY_ID,PROTOCOL,TAXONOMY_ID,CVE_ID,BUGTRAQ_ID,DESCRIPTION,MESSAGE FROM SIGNATURE"
     rows, err := db.Query(query)
@@ -570,12 +602,14 @@ func IterateSignature(db *sql.DB, where string, callback func(v *SignatureRow) e
     return nil
 }
 
+// TaxonomyMajorRow struct represents rows of the TAXONOMY_MAJOR table.
 type TaxonomyMajorRow struct {
     ID	int16
     Name	string
     Description	string
 }
 
+// IterateTaxonomyMajor provide access to all rows of the TAXONOMY_MAJOR matching given criteria.
 func IterateTaxonomyMajor(db *sql.DB, where string, callback func(v *TaxonomyMajorRow) error) error {
     query := "SELECT ID,NAME,DESCRIPTION FROM TAXONOMY_MAJOR"
     rows, err := db.Query(query)
@@ -599,12 +633,14 @@ func IterateTaxonomyMajor(db *sql.DB, where string, callback func(v *TaxonomyMaj
     return nil
 }
 
+// TaxonomyMinorRow struct represents rows of the TAXONOMY_MINOR table.
 type TaxonomyMinorRow struct {
     ID	int16
     MajorID	int16
     Description	string
 }
 
+// IterateTaxonomyMinor provide access to all rows of the TAXONOMY_MINOR matching given criteria.
 func IterateTaxonomyMinor(db *sql.DB, where string, callback func(v *TaxonomyMinorRow) error) error {
     query := "SELECT ID,MAJOR_ID,DESCRIPTION FROM TAXONOMY_MINOR"
     rows, err := db.Query(query)
@@ -628,11 +664,13 @@ func IterateTaxonomyMinor(db *sql.DB, where string, callback func(v *TaxonomyMin
     return nil
 }
 
+// TaxonomyPlatformRow struct represents rows of the TAXONOMY_PLATFORM table.
 type TaxonomyPlatformRow struct {
     ID	int16
     Description	string
 }
 
+// IterateTaxonomyPlatform provide access to all rows of the TAXONOMY_PLATFORM matching given criteria.
 func IterateTaxonomyPlatform(db *sql.DB, where string, callback func(v *TaxonomyPlatformRow) error) error {
     query := "SELECT ID,DESCRIPTION FROM TAXONOMY_PLATFORM"
     rows, err := db.Query(query)
@@ -656,11 +694,13 @@ func IterateTaxonomyPlatform(db *sql.DB, where string, callback func(v *Taxonomy
     return nil
 }
 
+// TaxonomyProtocolRow struct represents rows of the TAXONOMY_PROTOCOL table.
 type TaxonomyProtocolRow struct {
     ID	int16
     Description	string
 }
 
+// IterateTaxonomyProtocol provide access to all rows of the TAXONOMY_PROTOCOL matching given criteria.
 func IterateTaxonomyProtocol(db *sql.DB, where string, callback func(v *TaxonomyProtocolRow) error) error {
     query := "SELECT ID,DESCRIPTION FROM TAXONOMY_PROTOCOL"
     rows, err := db.Query(query)
@@ -684,11 +724,13 @@ func IterateTaxonomyProtocol(db *sql.DB, where string, callback func(v *Taxonomy
     return nil
 }
 
+// ThresholdUnitsRow struct represents rows of the THRESHOLD_UNITS table.
 type ThresholdUnitsRow struct {
     ID	int
     Name	sql.NullString
 }
 
+// IterateThresholdUnits provide access to all rows of the THRESHOLD_UNITS matching given criteria.
 func IterateThresholdUnits(db *sql.DB, where string, callback func(v *ThresholdUnitsRow) error) error {
     query := "SELECT ID,NAME FROM THRESHOLD_UNITS"
     rows, err := db.Query(query)
@@ -712,12 +754,14 @@ func IterateThresholdUnits(db *sql.DB, where string, callback func(v *ThresholdU
     return nil
 }
 
+// VirtualSegmentRow struct represents rows of the VIRTUAL_SEGMENT table.
 type VirtualSegmentRow struct {
     ID	uint
     DeviceID	string
     Name	sql.NullString
 }
 
+// IterateVirtualSegment provide access to all rows of the VIRTUAL_SEGMENT matching given criteria.
 func IterateVirtualSegment(db *sql.DB, where string, callback func(v *VirtualSegmentRow) error) error {
     query := "SELECT ID,DEVICE_ID,NAME FROM VIRTUAL_SEGMENT"
     rows, err := db.Query(query)
